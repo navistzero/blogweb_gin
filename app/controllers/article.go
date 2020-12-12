@@ -23,7 +23,7 @@ func AddArticle(c *gin.Context) {
 		Content: content,
 		Tags:    tags,
 		Author:  author,
-		Short:   content[:30],
+		Short:   content[:3],
 	}
 
 	articleServer := service.NewArticleServer()

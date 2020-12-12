@@ -8,14 +8,14 @@ import (
 // ArticleServer 文章服务对象
 type ArticleServer struct {
 	Cache string
-	Model models.ArticleModel
+	Model *models.ArticleModel
 }
 
 // NewArticleServer 创建文章服务工厂方法
 func NewArticleServer() *ArticleServer {
 	return &ArticleServer{
 		Cache: "yes",
-		Model: models.ArticleModel{},
+		Model: models.NewArticleModel(),
 	}
 }
 
