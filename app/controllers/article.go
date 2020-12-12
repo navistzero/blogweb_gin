@@ -2,13 +2,14 @@ package controllers
 
 import (
 	"fmt"
-	"myweb/models"
+	"myweb/entity"
+	"myweb/service"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
-// AddArticle ...
+// AddArticle 新增文章
 func AddArticle(c *gin.Context) {
 	//获取表单信息
 	title := c.PostForm("title")
@@ -17,7 +18,7 @@ func AddArticle(c *gin.Context) {
 	author := c.PostForm("author")
 	fmt.Println(title, content, author)
 
-	articleModel := &models.Article{
+	articleData := &entity.ArticleEntity{
 		Title:   title,
 		Content: content,
 		Tags:    tags,
@@ -25,10 +26,11 @@ func AddArticle(c *gin.Context) {
 		Short:   content[:30],
 	}
 
-	articleID, err := articleModel.AddArticle()
-	fmt.Println(articleID)
+	articleServer := service.NewArticleServer()
+	articleID, err := articleServer.AddArticle(articleData)
+	println(articleID, err)
 	if err != nil {
-		c.JSON(http.StatusOK, gin.H{"code": 0, "message": "ok"})
+		c.JSON(http.StatusOK, gin.H{"code": 0, "message": "ok", "data": articleID})
 	} else {
 		c.JSON(http.StatusOK, gin.H{"code": 1, "message": "error"})
 	}
